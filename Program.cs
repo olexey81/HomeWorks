@@ -6,7 +6,6 @@ namespace HomeWorks
     {
         static void Main(string[] args)
         {
-            var oList = new MyObservableList<int>();
 
 
         }
