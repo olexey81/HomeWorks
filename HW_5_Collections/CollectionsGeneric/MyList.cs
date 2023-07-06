@@ -311,5 +311,12 @@
             {
             }
         }
+        public override string ToString()
+        {
+            var outStr = string.Empty;
+            foreach (var item in _items)
+                outStr += item + " ";
+            return outStr;
+        }
     }
 }
