@@ -1,6 +1,6 @@
 ﻿namespace HW_6_LINQ_1
 {
-    internal class Program
+    public class Program
     {
         static void Main()
         {

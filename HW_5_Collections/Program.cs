@@ -1,6 +1,6 @@
 ﻿namespace HW_5_Collections
 {
-    internal class Program
+    public class Program
     {
         static void Main()
         {
