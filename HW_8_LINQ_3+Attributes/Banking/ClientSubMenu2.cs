@@ -13,8 +13,8 @@ namespace HW_4_Bank
         [MenuAction("Back", 0)]
         public void Back()
         {
-            Menu.DetectMenu<ExitMenuItem>().Process();
-            //ExitMenuItem();
+            Menu.DetectMenu<ClientSubMenu>().Process();
+            ExitMenuItem();
         }
 
     }
