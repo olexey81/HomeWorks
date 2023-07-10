@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace HW_7_LINQ_2
 {
-    internal class Program
+    public class Program
     {
         static void Main()
         {
