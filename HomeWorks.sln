@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_7_LINQ_2", "HW_7_LINQ_2\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_8_LINQ_3+Menu", "HW_8_LINQ_3+Attributes\HW_8_LINQ_3+Menu.csproj", "{15AD7F74-3AE5-4EFE-A62E-A54D9BA58429}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_9_File_Manager", "HW_9_File_Manager\HW_9_File_Manager.csproj", "{7135B141-2B13-4F15-BF6F-CB5B9E60CBB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{15AD7F74-3AE5-4EFE-A62E-A54D9BA58429}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15AD7F74-3AE5-4EFE-A62E-A54D9BA58429}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15AD7F74-3AE5-4EFE-A62E-A54D9BA58429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7135B141-2B13-4F15-BF6F-CB5B9E60CBB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7135B141-2B13-4F15-BF6F-CB5B9E60CBB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7135B141-2B13-4F15-BF6F-CB5B9E60CBB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7135B141-2B13-4F15-BF6F-CB5B9E60CBB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
