@@ -8,10 +8,10 @@ namespace HW_4_Bank
         public ClientSubMenu SubMenu { get; set; }
 
 
-        [MenuAction("Exit", 0)]                             // елементи головного меню - вихід з програми
-        public void Exit()
+        [MenuAction("Back", 0)]                             // елементи головного меню - вихід з програми
+        public void Back()
         {
-            Environment.Exit(0);
+            Menu.DetectMenu<MainMenu>().Process();
         }
     }
 }

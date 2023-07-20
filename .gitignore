@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/HW_8_LINQ_3+Attributes/Banking/ClientSubMenu2.cs

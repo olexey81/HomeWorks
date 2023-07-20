@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,5 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="HW_10_Unit_Tests\**" />
+    <Compile Remove="HW_5_Collections\**" />
+    <EmbeddedResource Remove="HW_10_Unit_Tests\**" />
+    <EmbeddedResource Remove="HW_5_Collections\**" />
+    <None Remove="HW_10_Unit_Tests\**" />
+    <None Remove="HW_5_Collections\**" />
+  </ItemGroup>
 
 </Project>
