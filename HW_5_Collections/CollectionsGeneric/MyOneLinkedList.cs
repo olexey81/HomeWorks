@@ -48,7 +48,8 @@
 
             _size++;
         }
-        public int BinarySearch(T item, Func<T, T, int> comparison)
+
+        public int BinarySearch(T item)
         {
             Sort();
             int left = 0;
@@ -59,7 +60,7 @@
                 int middle = (right + left) / 2;
                 T middleValue = GetNodeValueAt(middle);
 
-                int comparisonResult = comparison(middleValue, item);
+                int comparisonResult = Comparer<T>.Default.Compare(middleValue, item);
 
                 if (comparisonResult == 0)
                 {
@@ -97,7 +98,7 @@
         public virtual void Insert(int index, T data)
         {
             if (index > _size)
-                Console.WriteLine("Error! Incorrect index");
+                throw new IndexOutOfRangeException();
 
             if (index == 0)
             {

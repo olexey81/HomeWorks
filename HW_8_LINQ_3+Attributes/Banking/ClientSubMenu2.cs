@@ -14,7 +14,7 @@ namespace HW_4_Bank
         public void Back()
         {
             Menu.DetectMenu<ClientSubMenu>().Process();
-            ExitMenuItem();
+            //ExitMenuItem();
         }
 
     }

@@ -2,11 +2,19 @@
 {
     public class MyObservableList<T> : MyList<T>
     {
-        public event Action<T> ItemAdded;
-        public event Action<T> ItemRemoved;
-        public event Action ListCleared;
-        public event Action ListReversed;
-        public event Action ListSorted;
+        public event Action<T>? ItemAdded;
+        public event Action<T>? ItemRemoved;
+        public event Action? ListCleared;
+        public event Action? ListReversed;
+        public event Action? ListSorted;
+
+        public MyObservableList() : base ()
+        {
+        }
+
+        public MyObservableList(int capacity) : base (capacity)
+        {
+        }
 
         public override void Add(T item)
         {
@@ -16,19 +24,19 @@
         public override void Insert(int index, T newItem)
         {
             base.Insert(index, newItem);
-            ItemAdded.Invoke(newItem);
+            ItemAdded?.Invoke(newItem);
         }
         public override bool Remove(T item)
         {
             bool result = base.Remove(item);
             if (result)
-                ItemRemoved.Invoke(item);
+                ItemRemoved?.Invoke(item);
             return result;
         }
         public override void RemoveAt(int indexToRemove)
         {
             base.RemoveAt(indexToRemove);
-            ItemRemoved.Invoke(_items[indexToRemove - 1]);
+            ItemRemoved?.Invoke(_items[indexToRemove - 1]);
         }
         public override void Clear()
         {
@@ -39,13 +47,13 @@
         public override void Reverse()
         {
             base.Reverse();
-            ListReversed.Invoke();
+            ListReversed?.Invoke();
         }
 
         public override void Sort()
         {
             base.Sort();
-            ListSorted.Invoke();
+            ListSorted?.Invoke();
         }
     }
 }

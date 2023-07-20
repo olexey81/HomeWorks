@@ -23,7 +23,7 @@
         public override void Insert(int index, T data)
         {
             if (index > _size)
-                Console.WriteLine("Error! Incorrect index");
+                throw new IndexOutOfRangeException();
 
             if (index == 0)
             {
