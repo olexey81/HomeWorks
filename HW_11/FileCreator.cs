@@ -14,7 +14,7 @@ namespace HW_11_Generator
             while (true)
             {
                 Console.Write("Please enter number of rows to be generated: ");
-                if (int.TryParse(new ReadOnlySpan<char>(Console.ReadLine()!.ToArray()), out int result))
+                if (int.TryParse(Console.ReadLine()!.ToArray(), out int result))
                 {
                     _rowsNum = result;
                     break;
@@ -39,16 +39,36 @@ namespace HW_11_Generator
             var sw = new Stopwatch();
 
             sw.Start();
+            int buf = 100000; 
+            int all = _cities.Count;
+
             using (var lines = new StreamWriter($"../../../../{_resultFileName}"))
             {
-                for (int i = 0; i < _cities.Count; i++)
+                for (int begin = 0; begin < all; begin += buf)
                 {
-                    lines.WriteLine($"{_cities.Name[i]}:" +
-                                    $"{_cities.Area[i]};" +
-                                    $"{_cities.Population[i]};" +
-                                    $"{_cities.Country[i]}({_cities.Region[i]})");
+                    int batchEnd = Math.Min(begin + buf, all);
+
+                    for (int i = begin; i < batchEnd; i++)
+                    {
+                        lines.WriteLine($"{_cities.Name[i]}:" +
+                                        $"{_cities.Area[i]};" +
+                                        $"{_cities.Population[i]};" +
+                                        $"{_cities.Country[i]}({_cities.Region[i]})");
+                    }
+
+                    lines.Flush(); 
                 }
             }
+            //using (var lines = new StreamWriter($"../../../../{_resultFileName}"))
+            //{
+            //    for (int i = 0; i < _cities.Count; i++)
+            //    {
+            //        lines.WriteLine($"{_cities.Name[i]}:" +
+            //                        $"{_cities.Area[i]};" +
+            //                        $"{_cities.Population[i]};" +
+            //                        $"{_cities.Country[i]}({_cities.Region[i]})");
+            //    }
+            //}
             sw.Stop();
             Console.WriteLine($"Time elapsed for writing to SSD: {sw.Elapsed}");
         }

@@ -10,9 +10,17 @@ namespace HW_11_Parcer
 
         public City Cities => _cities;
 
-        public FileReader(string fileName)
+        public FileReader()
         {
-            _filePath = "../../../../" + fileName;
+            while (true)
+            {
+                Console.Write("Enter a name for *.txt resourse file: ");
+                _filePath = "../../../../" +  Console.ReadLine()! + ".txt";
+                if (!_filePath!.StartsWith(' ') && _filePath.Any(char.IsLetterOrDigit))
+                    break;
+                Console.WriteLine("Incorrect file name - it has consist at least one letter/number and can't start with whitespase");
+            }
+
             _cities = new City();
         }
 
@@ -31,10 +39,10 @@ namespace HW_11_Parcer
 
                 sw.Restart();
 
-                while (true)
+                while (!lines.EndOfStream)
                 {
                     line = lines.ReadLine().AsSpan();
-                    if (line == null) break;
+                    //if (line == null) break;
 
                     index = line.IndexOf(':');
                     _cities.Name.Add(line[..index].ToString());

@@ -6,16 +6,14 @@ namespace HW_11_Parcer
     {
         static void Main()
         {
-            var fc = new FileCreator();
-            fc.CreateFile();
 
-            var fr = new FileReader(fc.ResultFileName);
+            var fr = new FileReader();
             fr.OpenFile();
 
             var js = new Serializer(fr.Cities);
             js.JSFileCreator();
 
-            Console.WriteLine(fc.Cities.Equals(js.JSFileReader()));
+            //Console.WriteLine(fc.Cities.Equals(js.JSFileReader()));
         }
     }
 } 

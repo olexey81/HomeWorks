@@ -1,6 +1,6 @@
 ﻿namespace HW_11_Generator
 {
-    public class City 
+    public record class City 
     {
         public List<string> Name { get; set; }
         public List<string> Country { get; set; }
@@ -20,22 +20,22 @@
             Count = 0;
         }
 
-        public override bool Equals(object? obj)
-        {
-            if (obj == null || obj is not City other)
-                return false;
+        //public override bool Equals(object? obj)
+        //{
+        //    if (obj == null || obj is not City other)
+        //        return false;
 
-            return Name.SequenceEqual(other.Name) &&
-                   Country.SequenceEqual(other.Country) &&
-                   Region.SequenceEqual(other.Region) &&
-                   Population.SequenceEqual(other.Population) &&
-                   Area.SequenceEqual(other.Area) &&
-                   Count == other.Count;
-        }
+        //    return Name.SequenceEqual(other.Name) &&
+        //           Country.SequenceEqual(other.Country) &&
+        //           Region.SequenceEqual(other.Region) &&
+        //           Population.SequenceEqual(other.Population) &&
+        //           Area.SequenceEqual(other.Area) &&
+        //           Count == other.Count;
+        //}
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Name, Area, Population, Country, Population, Count);
-        }
+        //public override int GetHashCode()
+        //{
+        //    return HashCode.Combine(Name, Area, Population, Country, Population, Count);
+        //}
     }
 }

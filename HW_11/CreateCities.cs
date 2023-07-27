@@ -10,16 +10,12 @@ namespace HW_11_Generator
 
             using (var lines = new StreamReader("../../../../" + fileName))
             {
-                ReadOnlySpan<char> line;
-                while (true)
+                //ReadOnlySpan<char> line;
+                while (!lines.EndOfStream)
                 {
-                    line = lines.ReadLine().AsSpan();
-                    if (line == null) break;
-
-                    if (line.Length != 0)
+                    var titles = lines.ReadLine().Split(' ');
+                    if (titles.Length == 3)
                     {
-                        var titles = line.ToString().Split(' ');
-
                         citiesTitles.Name.Add(titles[0]);
                         citiesTitles.Country.Add(titles[1]);
                         citiesTitles.Region.Add(titles[2]);

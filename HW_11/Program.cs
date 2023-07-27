@@ -6,6 +6,8 @@ namespace HW_11_Generator
     {
         static void Main()
         {
+            var fc = new FileCreator();
+            fc.CreateFile();
         }
     }
 }
