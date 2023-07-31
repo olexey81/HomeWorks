@@ -25,6 +25,11 @@
             {
                 _threads[i] = new Thread(Job!) {Name = $"My thread {i}" };
             }
+            _progressThread = new Thread(Progres) { Name = "Progress" };
+            _progressThread.Start();
+
+            _abortThread = new Thread(AbortThreads);
+            _abortThread.Start();
 
             var arrMemory = _arr.AsMemory();
 
@@ -53,6 +58,13 @@
             }
             _partArr[realIndex] = span[index];
 
+        }
+
+        protected override void Progres()
+        {
+            _progrMaxValue = _length;
+            _progrIteration = _progrMaxValue / 50;
+            base.Progres();
         }
     }
 }

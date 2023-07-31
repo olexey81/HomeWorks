@@ -6,6 +6,6 @@
         {
         }
 
-        public abstract TResult ThreadsWait();
+        public new abstract TResult ThreadsWait();
     }
 }

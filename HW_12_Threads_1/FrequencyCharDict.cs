@@ -17,6 +17,7 @@
         {
             foreach (var thread in _threads)
                 thread.Join();
+            _progressThread.Join();
 
             var res = new Dictionary<char, int>();
             foreach (var dic in _dics)
@@ -48,6 +49,12 @@
                         dic[ch] = count + 1;
                 }
             }
+        }
+
+        protected override void Progres()
+        {
+            _progrIteration = 100;
+            base.Progres();
         }
     }
 }

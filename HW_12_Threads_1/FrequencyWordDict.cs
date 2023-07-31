@@ -16,6 +16,7 @@
         {
             foreach (var thread in _threads)
                 thread.Join();
+            _progressThread.Join();
 
             var res = new Dictionary<string, int>();
             foreach (var dic in _dics)
@@ -49,6 +50,10 @@
                 }
             }
         }
-
+        protected override void Progres()
+        {
+            _progrIteration = 100;
+            base.Progres();
+        }
     }
 }

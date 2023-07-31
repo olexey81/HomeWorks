@@ -22,6 +22,8 @@ namespace HW_12_Threads_1
         {
             foreach (var thread in _threads)
                 thread.Join();
+            _progressThread.Join();
+            _abortThread.Join();
 
             for (int i = 1; i < _results.Length; i++)
             {

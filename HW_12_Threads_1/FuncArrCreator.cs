@@ -3,8 +3,8 @@
     internal class FuncArrCreator : ThreadsCreator<double>
     {
 
-        public FuncArrCreator(int threatsNum, double[] inputArray) : base(threatsNum, inputArray)
-
+        public FuncArrCreator(int threatsNum, double[] inputArray)
+            : base(threatsNum, inputArray)
         {
         }
 
