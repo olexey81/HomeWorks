@@ -16,7 +16,9 @@ namespace HW_12_Threads_1
         protected int _progrCount = 0;
         protected int _progrIteration;
         protected int _progrMaxValue;
-        protected bool _stopFlag = false;
+        //protected bool _stopFlag = false;
+        CancellationTokenSource _cancelTokenSource;
+        protected CancellationToken _token;
 
 
         public T[] ResultArray => _arr;
@@ -30,6 +32,9 @@ namespace HW_12_Threads_1
             _threads = new Thread[_numThreads];
             _progrMaxValue = _arr.Length;
             _progrIteration = _progrMaxValue / 20;
+
+            _cancelTokenSource = new CancellationTokenSource();
+            _token = _cancelTokenSource.Token;
         }
 
         public virtual void ThreadsStart()
@@ -79,8 +84,13 @@ namespace HW_12_Threads_1
             {
                 JobItems(span, i, parameters);
                 Interlocked.Increment(ref _progrCount);
-                if (_stopFlag)
-                    Environment.Exit(0);
+                //if (_stopFlag)
+                //    Environment.Exit(0);
+                if (_token.IsCancellationRequested)
+                {
+                    Console.WriteLine("Thread aborted");
+                    return;
+                }
             }
         }
         protected virtual void Progres()
@@ -100,13 +110,14 @@ namespace HW_12_Threads_1
 
         protected void AbortThreads()
         {
-            while (!_stopFlag && _progrCount != _progrMaxValue)
+            while (!_token.IsCancellationRequested && _progrCount != _progrMaxValue)
             {
                 if (Console.KeyAvailable)
                 {
 
                     if (Console.ReadKey(true).Key == ConsoleKey.Escape)
-                        _stopFlag = true;
+                        //_stopFlag = true;
+                        _cancelTokenSource.Cancel();
                 }
             }
         }
