@@ -1,25 +1,18 @@
-﻿
-using System;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Reflection;
-
-namespace HW_12_Threads_1
+﻿namespace HW_12_Threads_1
 {
     public abstract class ThreadsCreator<T>
     {
-        protected readonly int _numThreads;
-        protected readonly T[] _arr;
+        protected object locker = new();
+        protected T[] _arr;
+        protected int _numThreads;
         protected Thread[] _threads;
-        protected Thread _progressThread;
+
         protected Thread _abortThread;
-        protected int _progrCount = 0;
-        protected int _progrIteration;
-        protected int _progrMaxValue;
-        //protected bool _stopFlag = false;
         CancellationTokenSource _cancelTokenSource;
         protected CancellationToken _token;
 
+        protected int[] _progressCount;
+        protected int _progressIteration;
 
         public T[] ResultArray => _arr;
 
@@ -30,11 +23,11 @@ namespace HW_12_Threads_1
                     : threatsNum;
             _arr = arr;
             _threads = new Thread[_numThreads];
-            _progrMaxValue = _arr.Length;
-            _progrIteration = _progrMaxValue / 20;
 
             _cancelTokenSource = new CancellationTokenSource();
             _token = _cancelTokenSource.Token;
+            _progressCount = new int[_numThreads];
+            _progressIteration = _arr.Length / 10;
         }
 
         public virtual void ThreadsStart()
@@ -43,12 +36,8 @@ namespace HW_12_Threads_1
             {
                 _threads[i] = new Thread(Job!) { Name = $"My thread {i}" };
             }
-
-            _progressThread = new Thread(Progres) { Name = "Progress" };
-            _progressThread.Start();
-
-            _abortThread = new Thread(AbortThreads);
-            _abortThread.Start();
+            _abortThread = new Thread(AbortThreads) { IsBackground = true };
+            _abortThread.Start(_cancelTokenSource);
 
             var arrMemory = _arr.AsMemory();
 
@@ -62,70 +51,62 @@ namespace HW_12_Threads_1
                 else
                     memSlice = arrMemory.Slice(i * treadSlice, treadSlice + remain);
 
-                _threads[i].Start(new StartParameters<T>(memSlice, i));
+                _threads[i].Start(new StartParameters<T>(memSlice, i, _token));
             }
         }
-
-
         public virtual void ThreadsWait()
         {
-            _progressThread.Join();
-            _abortThread.Join();
-
             foreach (var thread in _threads)
                 thread.Join();
         }
         protected void Job(object state)
         {
-            //work
             var parameters = (StartParameters<T>)state;
             var span = parameters.MemSlice.Span;
+            (int x, int y) = Console.GetCursorPosition();
+
             for (int i = 0; i < span.Length; i++)
             {
                 JobItems(span, i, parameters);
-                Interlocked.Increment(ref _progrCount);
-                //if (_stopFlag)
-                //    Environment.Exit(0);
-                if (_token.IsCancellationRequested)
+
+                _progressCount[parameters.ThreadIndex]++ ;
+                if (_progressCount[parameters.ThreadIndex] % _progressIteration == 0)
                 {
-                    Console.WriteLine("Thread aborted");
+                    Console.CursorVisible = false;
+                    Console.SetCursorPosition(x, y + parameters.ThreadIndex);
+                    Console.WriteLine($"ThreadID {parameters.ThreadIndex} Progress: {_progressCount[parameters.ThreadIndex]}  of {span.Length}");
+                }
+                if (_progressCount[parameters.ThreadIndex] == span.Length)
+                {
+                    Console.SetCursorPosition(x, y + parameters.ThreadIndex);
+                    Console.WriteLine($"ThreadID {parameters.ThreadIndex} Progress: {span.Length}  of {span.Length}");
+                }
+
+                if (parameters.Token.IsCancellationRequested)
+                {
+                    Console.WriteLine($"Thread {parameters.ThreadIndex} aborted");
+                    _cancelTokenSource.Dispose();
                     return;
                 }
             }
-        }
-        protected virtual void Progres()
-        {
-            (int x, int y) = Console.GetCursorPosition();
-            while (_progrCount != _progrMaxValue)
-            {
-                if (_progrCount % _progrIteration == 0)
-                {
-                    Console.SetCursorPosition(x, y);
-                    Console.WriteLine($"Progress: {_progrCount}  of {_progrMaxValue}");
-                }
-            }
-            Console.SetCursorPosition(x, y);
-            Console.WriteLine($"Progress: {_progrMaxValue}  of {_progrMaxValue}");
+            Console.SetCursorPosition(x, y + _numThreads);
         }
 
-        protected void AbortThreads()
+        protected void AbortThreads(object state)
         {
-            while (!_token.IsCancellationRequested && _progrCount != _progrMaxValue)
-            {
-                if (Console.KeyAvailable)
-                {
+            var cancelTokenSource = (CancellationTokenSource)state;
 
-                    if (Console.ReadKey(true).Key == ConsoleKey.Escape)
-                        //_stopFlag = true;
-                        _cancelTokenSource.Cancel();
+            while (!_token.IsCancellationRequested)
+            {
+                Thread.Sleep(100);
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                {
+                    cancelTokenSource.Cancel();
+                    break;
                 }
             }
         }
-
-
-        protected virtual void JobItems(Span<T> span, int index, StartParameters<T> parameters)
-        {
-        }
+        protected abstract void JobItems(Span<T> span, int index, StartParameters<T> parameters);
 
     }
 }

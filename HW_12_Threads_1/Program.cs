@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Text;
 
 namespace HW_12_Threads_1
 {
@@ -6,116 +7,149 @@ namespace HW_12_Threads_1
     {
         static void Main()
         {
-            int threads = 8;
+            Console.OutputEncoding = Encoding.UTF8;
+            int threads = 3;
             var sw = new Stopwatch();
-            int size = 100_000_000;
+            int size = 87_370_156;
+            Console.SetBufferSize(600, 10000);
 
-            Console.WriteLine("Генерація випадкового масиву:");
-            RandomeArrCreator randArr;
-            for (int i = 1; i <= threads; i++)
-            {
-                sw.Restart();
-                randArr = new RandomeArrCreator(i, new int[size]);
-                randArr.ThreadsStart();
-                randArr.ThreadsWait();
-                sw.Stop();
+            //var a = new RandomeArrCreator(threads, new int[size]);
+            //a.ThreadsStart();
+            //a.ThreadsWait();
 
-                Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
-            }
+            //Console.WriteLine("Генерація випадкового масиву:");
+            //RandomeArrCreator randArr;
+            //for (int i = 1; i <= threads; i++)
+            //{
+            //    Console.WriteLine("Threads: " + i);
+            //    sw.Restart();
+            //    randArr = new RandomeArrCreator(i, new int[size]);
+            //    randArr.ThreadsStart();
+            //    randArr.ThreadsWait();
+            //    sw.Stop();
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
+            //    Thread.Sleep(1000);
+            //}
 
             //Console.WriteLine("\nГенерація масиву відповідно до певної функції f(i), де i – позиція в масиві:");
             //FuncArrCreator funcArr;
             //for (int i = 1; i <= threads; i++)
             //{
+            //    Console.WriteLine("Threads: " + i);
+
             //    sw.Restart();
             //    funcArr = new FuncArrCreator(i, new double[size]);
             //    funcArr.ThreadsStart();
             //    funcArr.ThreadsWait();
             //    sw.Stop();
 
-            //    Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
             //}
 
-            //var a = new FuncArrCreator(threads, new double[size]);
-            //a.ThreadsStart();
-            //a.ThreadsWait();
 
-            //Console.WriteLine("\nСума елементів масиву\r\nСереднє в масиві");
+
+
+            //Console.WriteLine("\nСума елементів масиву");
+            //FindSum<int> sum;
             //for (int i = 1; i <= threads; i++)
             //{
+            //    Console.WriteLine("Threads: " + i);
             //    sw.Restart();
-            //    var sum = new FindSumAndAverage<double>(i, a.ResultArray);
+            //    sum = new FindSum<int>(i, a.ResultArray);
             //    sum.ThreadsStart();
             //    sum.ThreadsWait();
-            //    var res = sum.Sum;
-            //    var average = sum.Average;
             //    sw.Stop();
 
-            //    Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
             //}
 
-            //Console.WriteLine("\nМін. в масиві");
+            //Console.WriteLine("\nСереднє в масиві");
+            //FindAverage<int> average;
             //for (int i = 1; i <= threads; i++)
             //{
+            //    Console.WriteLine("Threads: " + i);
             //    sw.Restart();
-            //    var min = new FindMin<double>(i, a.ResultArray);
-            //    min.ThreadsStart();
-            //    min.ThreadsWait();
-            //    var res2 = min.MinInArray;
+            //    average = new FindAverage<int>(i, a.ResultArray);
+            //    average.ThreadsStart();
+            //    average.ThreadsWait();
             //    sw.Stop();
 
-            //    Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
+            //}
+
+
+            //Console.WriteLine("\nМін. в масиві");
+            //FindMin<int> min;
+            //for (int i = 1; i <= threads; i++)
+            //{
+            //    Console.WriteLine("Threads: " + i);
+            //    sw.Restart();
+            //    min = new FindMin<int>(i, a.ResultArray);
+            //    min.ThreadsStart();
+            //    min.ThreadsWait();
+            //    sw.Stop();
+
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
             //}
 
             //Console.WriteLine("\nМax. в масиві");
+            //FindMax<int> max;
             //for (int i = 1; i <= threads; i++)
             //{
+            //    Console.WriteLine("Threads: " + i);
             //    sw.Restart();
-            //    var max = new FindMax<double>(i, a.ResultArray);
+            //    max = new FindMax<int>(i, a.ResultArray);
             //    max.ThreadsStart();
             //    max.ThreadsWait();
-            //    var res3 = max.MaxInArray;
             //    sw.Stop();
 
-            //    Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
             //}
 
+
             //Console.WriteLine("\nКопіювати частину масиву");
+            //PartlyArray<int> cut;
             //for (int i = 1; i <= threads; i++)
             //{
+            //    Console.WriteLine("Threads: " + i);
             //    sw.Restart();
-
-            //    var cut = new PartlyArray<double>(i, a.ResultArray, 10_000_000, 20_000_000);
+            //    cut = new PartlyArray<int>(i, a.ResultArray, 10_000_000, 20_000_000);
             //    cut.ThreadsStart();
             //    cut.ThreadsWait();
             //    sw.Stop();
 
-            //    Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
             //}
+            //Console.WriteLine();
 
-            //var textArr = TextToString.Convert();
             //Console.WriteLine("\nЧастотний словник символів у якійсь довгій книзі/тексті");
+            //FrequencyCharDict dicChar;
             //for (int i = 1; i <= threads; i++)
             //{
+            //    Console.WriteLine("Threads: " + i);
             //    sw.Restart();
-            //    var dicChar = new FrequencyCharDict(i, textArr);
+            //    dicChar = new FrequencyCharDict(i, File.ReadAllLines("../../../text.txt"));
             //    dicChar.ThreadsStart();
-            //    var chars = dicChar.ThreadsWait();
+            //    dicChar.ThreadsWait();
             //    sw.Stop();
 
-            //    Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
+            //    Thread.Sleep(1000);
             //}
 
             //Console.WriteLine("\nЧастотний словник слів у якійсь довгій книзі/тексті");
+            //FrequencyWordDict dicWord;
             //for (int i = 1; i <= threads; i++)
             //{
+            //    Console.WriteLine("Threads: " + i);
             //    sw.Restart();
-            //    var dicWord = new FrequencyWordDict(i, textArr);
+            //    dicWord = new FrequencyWordDict(i, File.ReadAllLines("../../../text.txt"));
             //    dicWord.ThreadsStart();
-            //    var words = dicWord.ThreadsWait();
+            //    dicWord.ThreadsWait();
             //    sw.Stop();
 
-            //    Console.WriteLine("Threads:" + i + "\t" + "Time: " + sw.Elapsed);
+            //    Console.WriteLine("Time: " + sw.Elapsed + "\n");
+            //    Thread.Sleep(1000);
             //}
         }
     }

@@ -2,58 +2,41 @@
 {
     internal class FrequencyWordDict : Aggregator<string, Dictionary<string, int>>
     {
-        private Dictionary<string, int>[] _dics;
-
         public FrequencyWordDict(int threatsNum, string[] array) : base(threatsNum, array)
         {
-            _dics = new Dictionary<string, int>[threatsNum];
-            for (int i = 0; i < threatsNum; i++)
+            for (int i = 0; i < _numThreads; i++)
             {
-                _dics[i] = new Dictionary<string, int>();
+                ThreadsResults[i] = new Dictionary<string, int>();
             }
-        }
-        public override Dictionary<string, int> ThreadsWait()
-        {
-            foreach (var thread in _threads)
-                thread.Join();
-            _progressThread.Join();
-
-            var res = new Dictionary<string, int>();
-            foreach (var dic in _dics)
-            {
-                foreach (var kvp in dic)
-                {
-                    if (!dic.TryGetValue(kvp.Key, out int count))
-                        res.Add(kvp.Key, count);
-                    else
-                        res[kvp.Key] = count + 1;
-
-                }
-            }
-            return res;
+            Result = new Dictionary<string, int>();
         }
 
         protected override void JobItems(Span<string> span, int index, StartParameters<string> parameters)
         {
-            var dic = _dics[parameters.ThreadIndex];
+            var str = span[index].Split(' ', ',', '.', '?', '!', ':', ';', '"', '\'', '(', ')', '-', '`', '’', '‘');
 
-            for (int i = 0; i < span.Length; i++)
+            foreach (var word in str)
             {
-                var str = span[i].Split(' ', ',', '.', '?', '!', ':', ';', '"', '\'', '(', ')', '-', '`', '’', '‘');
-
-                foreach (var ch in str)
-                {
-                    if (!dic.TryGetValue(ch, out int count))
-                        dic[ch] = 1;
-                    else
-                        dic[ch] = count + 1;
-                }
+                if (!ThreadsResults[parameters.ThreadIndex].TryGetValue(word, out int count))
+                    ThreadsResults[parameters.ThreadIndex][word] = 1;
+                else
+                    ThreadsResults[parameters.ThreadIndex][word] = count + 1;
             }
         }
-        protected override void Progres()
+        public override void ThreadsWait()
         {
-            _progrIteration = 100;
-            base.Progres();
+            base.ThreadsWait();
+
+            foreach (var dic in ThreadsResults)
+            {
+                foreach (var kvp in dic)
+                {
+                    if (!Result.TryGetValue(kvp.Key, out int count))
+                        Result.Add(kvp.Key, kvp.Value);
+                    else
+                        Result[kvp.Key] = count + kvp.Value;
+                }
+            }
         }
     }
 }
