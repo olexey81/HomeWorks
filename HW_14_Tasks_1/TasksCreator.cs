@@ -11,7 +11,6 @@ namespace HW_14_Tasks_1
 
         protected Task _abortTasks;
         CancellationTokenSource _cancelTokenSource;
-        protected CancellationToken _token;
 
         protected int[] _progressCount;
         protected int _progressIteration;
@@ -27,7 +26,6 @@ namespace HW_14_Tasks_1
             _tasks = new Task[_numTasks];
 
             _cancelTokenSource = new CancellationTokenSource();
-            _token = _cancelTokenSource.Token;
             _progressCount = new int[_numTasks];
         }
 
@@ -52,8 +50,7 @@ namespace HW_14_Tasks_1
                 else
                     memSlice = arrMemory.Slice(i * treadSlice, treadSlice + remain);
                 int taskIndex = i;
-                _tasks[i] = Task.Factory.StartNew(() => Job(memSlice, taskIndex), _token) ;
-                //    _tasks[i].Start();
+                _tasks[i] = Task.Factory.StartNew(() => Job(memSlice, taskIndex), _cancelTokenSource.Token) ;
             }
         }
         public virtual void TasksWait()
@@ -67,7 +64,7 @@ namespace HW_14_Tasks_1
 
             for (int i = 0; i < span.Length; i++)
             {
-                if (_token.IsCancellationRequested)
+                if (_cancelTokenSource.Token.IsCancellationRequested)
                 {
                     Console.Clear();
                     Console.WriteLine($"All threads are aborted");
@@ -85,7 +82,7 @@ namespace HW_14_Tasks_1
 
         protected void AbortTasks(CancellationTokenSource cancelTokenSource)
         {
-            while (!_token.IsCancellationRequested)
+            while (!_cancelTokenSource.Token.IsCancellationRequested)
             {
                 Thread.Sleep(200);
                 if (Console.ReadKey(true).Key == ConsoleKey.Escape)
