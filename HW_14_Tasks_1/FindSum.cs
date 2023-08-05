@@ -2,13 +2,13 @@
 
 namespace HW_14_Tasks_1
 {
-    public class FindSum<T> : Aggregator<T, T> where T : INumber<T>
+    public class FindSum<T> : Aggregator<T, decimal> where T : INumber<T>
     {
         public FindSum(int tasksNum, T[] inputArray) : base(tasksNum, inputArray) {}
 
         protected override void JobItems(Span<T> span, int index, int taskIndex)
         {
-            TasksResults[taskIndex] += span[index];
+            TasksResults[taskIndex] += Convert.ToDecimal(span[index]);
         }
         public override void TasksWait()
         {
