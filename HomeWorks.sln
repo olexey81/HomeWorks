@@ -21,10 +21,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HW_11_Generator", "HW_11\HW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HW_11_Parcer", "HW_11_Parcer\HW_11_Parcer.csproj", "{ED4173CB-5393-486A-B619-51994B6E5B4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_12_Threads_1", "HW_12_Threads_1\HW_12_Threads_1.csproj", "{85406605-6DE2-4729-A6D0-651C4C1CCDFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HW_12_Threads_1", "HW_12_Threads_1\HW_12_Threads_1.csproj", "{85406605-6DE2-4729-A6D0-651C4C1CCDFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_14_Tasks_1", "HW_14_Tasks_1\HW_14_Tasks_1.csproj", "{B7DC534C-EA4A-4920-B8F2-FBEFAE15365C}"
+<<<<<<< Updated upstream
+=======
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HW_14_Tasks_1", "HW_14_Tasks_1\HW_14_Tasks_1.csproj", "{B7DC534C-EA4A-4920-B8F2-FBEFAE15365C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW_15_Async", "HW_15_Async\HW_15_Async.csproj", "{E37FC486-8E25-4072-8D87-EA6BB7684656}"
+EndProject
+>>>>>>> Stashed changes
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +76,17 @@ Global
 		{85406605-6DE2-4729-A6D0-651C4C1CCDFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85406605-6DE2-4729-A6D0-651C4C1CCDFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85406605-6DE2-4729-A6D0-651C4C1CCDFD}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< Updated upstream
+=======
 		{B7DC534C-EA4A-4920-B8F2-FBEFAE15365C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7DC534C-EA4A-4920-B8F2-FBEFAE15365C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7DC534C-EA4A-4920-B8F2-FBEFAE15365C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7DC534C-EA4A-4920-B8F2-FBEFAE15365C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E37FC486-8E25-4072-8D87-EA6BB7684656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E37FC486-8E25-4072-8D87-EA6BB7684656}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E37FC486-8E25-4072-8D87-EA6BB7684656}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E37FC486-8E25-4072-8D87-EA6BB7684656}.Release|Any CPU.Build.0 = Release|Any CPU
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
