@@ -36,6 +36,7 @@ namespace HW_15_Async
 
                 progress -= bufferSize;
             }
+            await task;
         }
 
         private IEnumerator<byte[]> GetBuffers(long length)
