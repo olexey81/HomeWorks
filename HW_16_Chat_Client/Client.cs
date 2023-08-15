@@ -8,10 +8,10 @@ namespace HW_16_Chat_Client
         internal NetworkStream stream;
         internal string? ClientName { get; set; }
 
-        public Client()
+        public Client(UdpScanner serverData)
         {
             _tcpClient = new TcpClient(AddressFamily.InterNetwork);
-            _tcpClient.Connect("192.168.50.50", 5002);
+            _tcpClient.Connect(serverData.ServerIP, serverData.ServerPort);
             stream = _tcpClient.GetStream();
 
             Console.WriteLine($"Client started on {_tcpClient.Client.LocalEndPoint}");

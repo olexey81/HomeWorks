@@ -10,10 +10,10 @@ namespace HW_16_Chat_Server
         private List<ChatClient> _clients;
         private Dictionary<string, string> _namesAndPasswords;
         private readonly object _locker = new();
-
+        internal const int PORT = 5002;
         public Server()
         {
-            listener = new TcpListener(IPAddress.Parse("192.168.50.50"), 5002);       
+            listener = new TcpListener(IPAddress.Any, PORT);       
             _clients = new List<ChatClient>();                                        
             _namesAndPasswords = new Dictionary<string, string>();                    
         }
@@ -21,14 +21,18 @@ namespace HW_16_Chat_Server
         public async Task Start()
         {
             listener.Start();                                                         
-            Console.WriteLine($"LocalChat started on: {listener.LocalEndpoint}");     
+            Console.WriteLine($"LocalChat started on: {listener.LocalEndpoint}");
+            var recieverUDP = new UdpReciever();
+            _ = Task.Run(recieverUDP.ScanNetwork);
+
             try
             {
                 while (true)
                 {
+
                     Console.WriteLine("Waiting for client connection...");
                     var client = new ChatClient(await listener.AcceptTcpClientAsync());
-                    await Console.Out.WriteLineAsync($"Client on {client._endPoint} connected to server");
+                    Console.WriteLine($"Client on {client._endPoint} connected to server");
                     _ = Task.Run(async () =>
                     {
                         Loginer(client);                                             
@@ -49,14 +53,16 @@ namespace HW_16_Chat_Server
         {
             foreach (var cl in _clients.Where(c =>
             {
-                if (recipient != null)
+                if (recipient != "all")
                     return c.Name != sender && c.Name == recipient;
                 else
                     return c.Name != sender;
             }))
             {
-                cl.SendMessage($"Message from {sender}: {obj}");
+                cl.SendMessage($"Message from {sender} to {recipient}: {obj}");
             }
+            MessagesLogger.SaveToFile(sender, recipient, obj);
+            Console.WriteLine("Message logged");
         }
 
         private void Loginer(ChatClient client)                                         
