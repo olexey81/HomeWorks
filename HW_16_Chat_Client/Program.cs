@@ -4,8 +4,9 @@
     {
         static async Task Main()
         {
-
-            Client newClient = new();
+            var serverData = new UdpScanner();
+            await serverData.ScanNetwork();
+            Client newClient = new Client(serverData);
             Task read = new Reader(newClient).Read();
             Task write = new Writer(newClient).Write();
 

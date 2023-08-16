@@ -43,7 +43,7 @@ namespace HW_16_Chat_Server
                         case (int)MessageType.Common:
                             line = _reader.ReadLine();        
                             Log(line);                        
-                            MessageSent?.Invoke(Name!, null, line); 
+                            MessageSent?.Invoke(Name!, "all", line); 
                             break;
 
                         case (int)MessageType.Private:
